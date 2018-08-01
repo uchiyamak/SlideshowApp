@@ -10,9 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
     
-    var timer_sec: Float = 0
     var timer: Timer!
     
     //画像番号
@@ -20,22 +19,22 @@ class ViewController: UIViewController {
     let imageNameArr = ["01", "02", "03", "04", "05"]
     
     //停止０、再生中１
-    var playing = 0
+    var playing = false
     
     @IBOutlet weak var label: UIButton!
     @IBAction func StartStop(_ sender: Any) {
-        if playing == 0 {
+        if playing == false {
             self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateImage(_:)), userInfo: nil, repeats: true)
             label.setTitle("停止", for: .normal)  //.nomalの場合、何もしてない時。.はenum←集合を定義できる。選択項目が限定されている場合。
             StepBack.isEnabled = false
             MoveOn.isEnabled = false
-            playing = 1
+            playing = true
         } else {
             self.timer.invalidate()
             label.setTitle("再生", for: .normal)
             StepBack.isEnabled = true
             MoveOn.isEnabled = true
-            playing = 0
+            playing = false
         }
     }
     
@@ -53,16 +52,16 @@ class ViewController: UIViewController {
     func cngImg(plumi: Int){
         //画像Noを更新
         imageNo += plumi
-        if imageNo == 5 {
+        if imageNo == imageNameArr.count {
             imageNo = 0
         }
         else if imageNo == -1 {
-            imageNo = 4
+            imageNo = imageNameArr.count - 1
         }
         //名前の取り出し
         let imgName = imageNameArr[imageNo]
         let showImg = UIImage(named: imgName)
-        image.image = showImg
+        imageView.image = showImg
     }
     @objc func updateImage(_ timer: Timer) {   //@objcってなに？ timer、必要？　_ timer: Timer
         //次の画像に切り替える
@@ -72,7 +71,10 @@ class ViewController: UIViewController {
     @IBAction func onTapImg(_ sender: Any) {
         //次の画面を表示
         performSegue(withIdentifier:"result", sender: nil)  //詳しくはわからんが、いったん成功
-        //print("aaaaaaa")
+        //スライドショーの途中で画像をタップしたらタイマーを止める
+        if playing {
+            self.timer.invalidate()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -83,6 +85,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func unwind(_ segue: UIStoryboardSegue) {
+        //もしもスライドショーから飛んでた場合、タイマーを再開
+        if playing {
+            self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updateImage(_:)), userInfo: nil, repeats: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -90,7 +96,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         let showImg = UIImage(named: "01")
-        image.image = showImg
+        imageView.image = showImg
         
     }
 

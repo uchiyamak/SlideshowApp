@@ -65,7 +65,7 @@
                     <connections>
                         <outlet property="MoveOn" destination="QQu-kn-Sea" id="XeQ-Y9-IpX"/>
                         <outlet property="StepBack" destination="pcZ-Vr-pas" id="2Tb-Hj-Ruj"/>
-                        <outlet property="image" destination="ixb-37-7Vc" id="rwr-Tz-aS6"/>
+                        <outlet property="imageView" destination="ixb-37-7Vc" id="bKB-M2-syX"/>
                         <outlet property="label" destination="mPu-8Z-gf5" id="Eh5-bV-Hzh"/>
                         <segue destination="toP-tt-gXj" kind="show" identifier="result" id="Jtq-8l-Ed5"/>
                     </connections>
