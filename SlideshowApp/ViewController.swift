@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     //画像番号
     var imageNo: Int = 0
-    let imageNameArr = ["01", "02", "03", "04", "05"]
+    let imageNameArr = ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg"]
     
     //停止０、再生中１
     var playing = false
@@ -95,7 +95,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let showImg = UIImage(named: "01")
+        let showImg = UIImage(named: "01.jpg")
         imageView.image = showImg
         
     }
